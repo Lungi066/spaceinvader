@@ -1,2 +1,2 @@
 # spaceinvader
-Space Invader game
+Space Invaders game
