@@ -14,6 +14,7 @@ pygame.display.set_icon(icon)
 playerimg = pygame.image.load('spaceship.png')
 playerX = 370
 playerY = 480
+playerX_change = 0
 
 def player(x, y):
     screen.blit(playerimg, (x, y))
@@ -24,10 +25,28 @@ while running:
 
     #RGB
     screen.fill((0, 128, 128))
-    playerY -= 0.1
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+        # check keystroke pressed
+        if event.type == pygame.KEYDOWN:
+            print("A keystroke is pressed")
+            if event.key == pygame.K_LEFT:
+                playerX_change = -2
+            if event.key == pygame.K_RIGHT:
+                playerX_change = 2
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                playerX_change = 0
+
+    playerX += playerX_change
+
+    if playerX <=0:
+        playerX = 0
+    elif playerX >= 736:
+        playerX = 736
 
     player(playerX, playerY)
     pygame.display.update()
