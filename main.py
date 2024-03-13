@@ -16,10 +16,10 @@ playerY = 480
 playerX_change = 0
 
 # enemy
-playerimg = pygame.image.load('alien.png')
-playerX = 370
-playerY = 480
-playerX_change = 0
+enemyimg = pygame.image.load('alien.png')
+enemyX = 370
+enemyY = 50
+enemyX_change = 0
 
 
 def player(x, y):
@@ -27,7 +27,7 @@ def player(x, y):
 
 
 def enemy(x, y):
-    screen.blit(playerimg, (x, y))
+    screen.blit(enemyimg, (x, y))
 
 
 # Game Loop
@@ -60,4 +60,5 @@ while running:
         playerX = 736
 
     player(playerX, playerY)
+    enemy(enemyX, enemyY)
     pygame.display.update()
