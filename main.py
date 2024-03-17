@@ -5,6 +5,9 @@ pygame.init()
 
 screen = pygame.display.set_mode((800, 600))
 
+# Background
+background = pygame.image.load('space-background-with-nebula.jpg')
+
 # Title and icon
 pygame.display.set_caption("Space Invaders")
 icon = pygame.image.load('space.png')
@@ -38,6 +41,8 @@ while running:
 
     # RGB
     screen.fill((0, 128, 128))
+    #background image
+    screen.blit(background, (0,0))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
