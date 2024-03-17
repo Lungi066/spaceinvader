@@ -1,4 +1,5 @@
 import pygame
+import random
 
 pygame.init()
 
@@ -17,9 +18,10 @@ playerX_change = 0
 
 # enemy
 enemyimg = pygame.image.load('alien.png')
-enemyX = 370
-enemyY = 50
-enemyX_change = 0
+enemyX = random.randint(0, 800)
+enemyY = random.randint(50, 150)
+enemyX_change = 0.3
+enemyY_change = 40
 
 
 def player(x, y):
@@ -52,12 +54,23 @@ while running:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 playerX_change = 0
 
+    #Spaceship boundaries
     playerX += playerX_change
 
     if playerX <= 0:
         playerX = 0
     elif playerX >= 736:
         playerX = 736
+
+    #Enemy movement
+    enemyX += enemyX_change
+
+    if enemyX <= 0:
+        enemyX_change = 1.5
+        enemyY += enemyY_change
+    elif enemyX >= 736:
+        enemyX_change = -1.5
+        enemyY += enemyY_change
 
     player(playerX, playerY)
     enemy(enemyX, enemyY)
