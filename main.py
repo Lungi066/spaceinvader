@@ -23,8 +23,20 @@ playerX_change = 0
 enemyimg = pygame.image.load('alien.png')
 enemyX = random.randint(0, 800)
 enemyY = random.randint(50, 150)
-enemyX_change = 0.3
+enemyX_change = 1.5
 enemyY_change = 40
+
+# bullet
+
+# bullet ready state = you can't see the bullet on the screen
+# fire = the bullet is currently moving
+
+bulletimg = pygame.image.load('bullet.png')
+bulletX = 0
+bulletY = 480
+bulletX_change = 0
+bulletY_change = 10
+bullet_state = "ready"
 
 
 def player(x, y):
@@ -35,14 +47,20 @@ def enemy(x, y):
     screen.blit(enemyimg, (x, y))
 
 
+def fire_bullet(x, y):
+    global bullet_state
+    bullet_state = "fire"
+    screen.blit(bulletimg, (x + 16, y + 10))
+
+
 # Game Loop
 running = True
 while running:
 
     # RGB
     screen.fill((0, 128, 128))
-    #background image
-    screen.blit(background, (0,0))
+    # background image
+    screen.blit(background, (0, 0))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -55,11 +73,14 @@ while running:
                 playerX_change = -2
             if event.key == pygame.K_RIGHT:
                 playerX_change = 2
+            if event.key == pygame.K_SPACE:
+                fire_bullet(playerX, bulletY)
+
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 playerX_change = 0
 
-    #Spaceship boundaries
+    # Spaceship boundaries
     playerX += playerX_change
 
     if playerX <= 0:
@@ -67,7 +88,7 @@ while running:
     elif playerX >= 736:
         playerX = 736
 
-    #Enemy movement
+    # Enemy movement
     enemyX += enemyX_change
 
     if enemyX <= 0:
@@ -76,6 +97,11 @@ while running:
     elif enemyX >= 736:
         enemyX_change = -1.5
         enemyY += enemyY_change
+
+    #bullet movement
+    if bullet_state is "fire":
+        fire_bullet(playerX, bulletY)
+        bulletY -= bulletY_change
 
     player(playerX, playerY)
     enemy(enemyX, enemyY)
